@@ -33,7 +33,7 @@ if(isset($_GET['delete']))
     // supprimer en cascade les éléments lié à la catégorie à supprimer
     // aller chercher tous les établissements qui ont l'id ex 7
     // ne pas oublier les images de la gallerie associée
-    $works = $bdd->prepare("SELECT * FROM oeuvre WHERE categorie=?");
+    $works = $bdd->prepare("SELECT * FROM works WHERE categorie=?");
     $works->execute([$idDel]);
     while($donWorks = $works->fetch())
     {
@@ -41,7 +41,7 @@ if(isset($_GET['delete']))
         unlink("../images/".$donWorks['image']);
         unlink("../images/mini_".$donWorks['image']);
         // supprimer les éventuelles images (fichier) de la galerie
-        $gal = $bdd->prepare("SELECT * FROM images WHERE id_oeuvre=?");
+        $gal = $bdd->prepare("SELECT * FROM images WHERE id_works=?");
         $gal->execute([$donWorks['id']]);
         while($donGal = $gal->fetch())
         {
@@ -50,14 +50,14 @@ if(isset($_GET['delete']))
         $gal->closeCursor();
 
         // supprimer les éventuelles images (la donnée) de la galerie
-        $delGal = $bdd->prepare("DELETE FROM images WHERE id_oeuvre=?");
+        $delGal = $bdd->prepare("DELETE FROM images WHERE id_works=?");
         $delGal->execute([$idDel]);
         $delGal->closeCursor();
     }
     $works->closeCursor();
 
     // supprimer tous les établissements qui ont l'id ex 7
-    $deleteWorks = $bdd->prepare("DELETE FROM oeuvres WHERE categorie=?");
+    $deleteWorks = $bdd->prepare("DELETE FROM works WHERE categorie=?");
     $deleteWorks->execute([$idDel]);
     $deleteWorks->closeCursor();
 

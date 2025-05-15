@@ -10,10 +10,13 @@
           <a class="nav-link active" aria-current="page" href="dashboard.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="schools.php">Etablissement</a>
+          <a class="nav-link" href="works.php">Oeuvres</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="categories.php">Catégories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="skills.php">Skills</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="members.php">Membres</a>

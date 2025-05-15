@@ -1,75 +1,47 @@
 <?php
-session_start();
-if(!$_SESSION['login'])
-{
-    header("LOCATION:index.php");
-    exit();
-}
-require "../connexion.php";
-
-if(isset($_GET['delete']))
-{
-    // vérifier si delete est numérique
-    $idDel = htmlspecialchars($_GET['delete']);
-    if(!is_numeric($idDel))
+    session_start();
+    if(!$_SESSION['login'])
     {
-        header("LOCATION:schools.php");
+        header("LOCATION:index.php");
         exit();
     }
+    require "../connexion.php";
 
-
-    // vérifier si delete existe dans la bdd
-    $cat = $bdd->prepare("SELECT * FROM categories WHERE id=?");
-    $cat->execute([$idDel]);
-    $donCat = $cat->fetch();
-    $cat->closeCursor();
-    if(!$donCat)
+    if(isset($_GET['delete']))
     {
-        header("LOCATION:categories.php");
-        exit();
-    }
-
-    // supprimer en cascade les éléments lié à la catégorie à supprimer
-    // aller chercher tous les établissements qui ont l'id ex 7
-    // ne pas oublier les images de la gallerie associée
-    $works = $bdd->prepare("SELECT * FROM oeuvres WHERE categorie=?");
-    $works->execute([$idDel]);
-    while($donWorks = $works->fetch())
-    {
-        // supprimer l'image
-        unlink("../images/".$donWorks['image']);
-        unlink("../images/mini_".$donWorks['image']);
-        // supprimer les éventuelles images (fichier) de la galerie
-        $gal = $bdd->prepare("SELECT * FROM images WHERE id_oeuvre=?");
-        $gal->execute([$donWorks['id']]);
-        while($donGal = $gal->fetch())
+        // vérifier si delete est numérique
+        $idDel = htmlspecialchars($_GET['delete']);
+        if(!is_numeric($idDel))
         {
-            unlink("../images/".$donGal['fichier']);
+            header("LOCATION:skills.php");
+            exit();
         }
-        $gal->closeCursor();
 
-        // supprimer les éventuelles images (la donnée) de la galerie
-        $delGal = $bdd->prepare("DELETE FROM images WHERE id_oeuvre=?");
-        $delGal->execute([$idDel]);
-        $delGal->closeCursor();
+        
+        // vérifier si delete existe dans la bdd
+        $work = $bdd->prepare("SELECT * FROM skills WHERE id=?");
+        $work->execute([$idDel]);
+        $donSkills = $skills->fetch();
+        $skills->closeCursor();
+        if(!$donSkills)
+        {
+            header("LOCATION:skills.php");
+            exit();
+        } 
+
+        // supprimer le fichier
+        // /skills/ = dossier >< /skills = fichier
+        unlink("../images/skills/".$donSkills['image']);
+
+        // supprimer la donnée dans la bdd
+        $delete = $bdd->prepare("DELETE FROM skills WHERE id=?");
+        $delete->execute([$idDel]);
+        $delete->closeCursor();
+
+        // prévenir l'utilisateur
+        header("LOCATION:works.php?successdel=".$idDel);
+        exit();
     }
-    $workss->closeCursor();
-
-    // supprimer tous les établissements qui ont l'id ex 7
-    $deleteWorks = $bdd->prepare("DELETE FROM oeuvres WHERE categorie=?");
-    $deleteWorks->execute([$idDel]);
-    $deleteWorks->closeCursor();
-
-    // supprimer la donnée dans la bdd
-    $delete = $bdd->prepare("DELETE FROM categories WHERE id=?");
-    $delete->execute([$idDel]);
-    $delete->closeCursor();
-
-
-    // prévenir l'utilisateur
-    header("LOCATION:categories.php?successdel=".$idDel);
-    exit();
-}
 
 
 ?>
@@ -84,55 +56,54 @@ if(isset($_GET['delete']))
     <title>BI2 Portail - Admin</title>
 </head>
 <body>
-<?php
-include("partials/header.php");
-?>
-<div class="container-fluid">
-    <h1>Les catégories</h1>
-    <a href="addCategory.php" class="btn btn-success">Ajouter</a>
     <?php
-    if(isset($_GET['insert']))
-    {
-        if($_GET['insert']=="success")
+        include("partials/header.php");
+    ?>
+  <div class="container-fluid">
+    <h1>Les skills</h1>
+    <a href="addSkill.php" class="btn btn-success">Ajouter</a>
+    <?php
+        if(isset($_GET['insert']))
         {
-            echo "<div class='alert alert-success my-3'>Vous avez bien ajouté une catégorie à la liste</div>";
+            if($_GET['insert']=="success")
+            {
+                echo "<div class='alert alert-success my-3'>Vous avez bien ajouté une compétence à la liste</div>";
+            }
         }
-    }
-    if(isset($_GET['update']))
-    {
-        echo "<div class='alert alert-warning my-3'>Vous avez bien modifié l'id numéro ".$_GET['update']."</div>";
-    }
-    if(isset($_GET['successdel']))
-    {
-        echo "<div class='alert alert-danger my-3'>Vous avez bien supprimé l'id numéro ".$_GET['successdel']."</div>";
-    }
+        
+        if(isset($_GET['successdel']))
+        {
+            echo "<div class='alert alert-danger my-3'>Vous avez bien supprimé l'id numéro ".$_GET['successdel']."</div>";
+        }
     ?>
     <table class="table table-striped">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Action</th>
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
-        <?php
-        $categories = $bdd->query("SELECT * FROM categories");
-        while($don = $categories->fetch())
-        {
-            echo "<tr>";
-            echo "<td>".$don['id']."</td>";
-            echo "<td>".$don['nom']."</td>";
-            echo "<td>";
-            echo "<a href='updateCategory.php?id=".$don['id']."' class='btn btn-warning mx-1'>Modifier</a>";
-            echo "<a href='categories.php?delete=".$don['id']."' class='btn btn-danger mx-1'>Supprimer</a>";
-            echo "</td>";
-            echo "</tr>";
-        }
-        $categories->closeCursor();
-        ?>
+            <?php
+                $req = $bdd->query("SELECT * FROM skills");
+                while($don = $req->fetch())
+                {
+                    echo "<tr>";
+                        echo "<td class='align-middle'>".$don['id']."</td>";
+                        echo "<td class='align-middle'>".$don['nom']."</td>";
+                        echo "<td>";
+                            echo "<div class='col-3'><img src='../images/skills/".$don['image']."' alt='".$don['nom']."' class='col-3 img-fluid'></div>";
+                        echo "<td class='align-middle'>";
+                            echo "<a href='skills.php?delete=".$don['id']."' class='btn btn-danger mx-1'>Supprimer</a>";
+                        echo "</td>";
+                    echo "</tr>";
+                }
+                $req->closeCursor();
+            ?>
         </tbody>
     </table>
-</div>
+  </div>
 </body>
 </html>

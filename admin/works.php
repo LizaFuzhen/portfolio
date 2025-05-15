@@ -75,7 +75,7 @@
     ?>
   <div class="container-fluid">
     <h1>Les oeuvres</h1>
-    <a href="addWorks.php" class="btn btn-success">Ajouter</a>
+    <a href="addWork.php" class="btn btn-success">Ajouter</a>
     <?php
         if(isset($_GET['insert']))
         {
@@ -104,7 +104,7 @@
         </thead>
         <tbody>
             <?php
-                $works = $bdd->query("SELECT oevres.nom AS enom, oeuvres.id AS eid, categories.nom AS cnom FROM oeuvres INNER JOIN categories ON oeuvres.categorie = categories.id"); 
+                $works = $bdd->query("SELECT works.nom AS enom, works.id AS eid, categories.nom AS cnom FROM works INNER JOIN categories ON works.categorie = categories.id"); 
                 while($don = $works->fetch())
                 {
                     echo "<tr>";
