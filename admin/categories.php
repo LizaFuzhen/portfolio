@@ -13,13 +13,14 @@ if(isset($_GET['delete']))
     $idDel = htmlspecialchars($_GET['delete']);
     if(!is_numeric($idDel))
     {
-        header("LOCATION:schools.php");
+        header("LOCATION:works.php");
         exit();
     }
 
 
     // vérifier si delete existe dans la bdd
     $cat = $bdd->prepare("SELECT * FROM categories WHERE id=?");
+    // quoi mettre pour categories ?
     $cat->execute([$idDel]);
     $donCat = $cat->fetch();
     $cat->closeCursor();
@@ -32,16 +33,16 @@ if(isset($_GET['delete']))
     // supprimer en cascade les éléments lié à la catégorie à supprimer
     // aller chercher tous les établissements qui ont l'id ex 7
     // ne pas oublier les images de la gallerie associée
-    $schools = $bdd->prepare("SELECT * FROM etablissements WHERE categorie=?");
-    $schools->execute([$idDel]);
-    while($donSchools = $schools->fetch())
+    $works = $bdd->prepare("SELECT * FROM oeuvre WHERE categorie=?");
+    $works->execute([$idDel]);
+    while($donWorks = $works->fetch())
     {
         // supprimer l'image
-        unlink("../images/".$donSchools['image']);
-        unlink("../images/mini_".$donSchools['image']);
+        unlink("../images/".$donWorks['image']);
+        unlink("../images/mini_".$donWorks['image']);
         // supprimer les éventuelles images (fichier) de la galerie
-        $gal = $bdd->prepare("SELECT * FROM images WHERE id_etablissement=?");
-        $gal->execute([$donSchools['id']]);
+        $gal = $bdd->prepare("SELECT * FROM images WHERE id_oeuvre=?");
+        $gal->execute([$donWorks['id']]);
         while($donGal = $gal->fetch())
         {
             unlink("../images/".$donGal['fichier']);
@@ -49,16 +50,16 @@ if(isset($_GET['delete']))
         $gal->closeCursor();
 
         // supprimer les éventuelles images (la donnée) de la galerie
-        $delGal = $bdd->prepare("DELETE FROM images WHERE id_etablissement=?");
+        $delGal = $bdd->prepare("DELETE FROM images WHERE id_oeuvre=?");
         $delGal->execute([$idDel]);
         $delGal->closeCursor();
     }
-    $schools->closeCursor();
+    $works->closeCursor();
 
     // supprimer tous les établissements qui ont l'id ex 7
-    $deleteSchools = $bdd->prepare("DELETE FROM etablissements WHERE categorie=?");
-    $deleteSchools->execute([$idDel]);
-    $deleteSchools->closeCursor();
+    $deleteWorks = $bdd->prepare("DELETE FROM oeuvres WHERE categorie=?");
+    $deleteWorks->execute([$idDel]);
+    $deleteWorks->closeCursor();
 
     // supprimer la donnée dans la bdd
     $delete = $bdd->prepare("DELETE FROM categories WHERE id=?");

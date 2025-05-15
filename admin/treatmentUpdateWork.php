@@ -13,23 +13,23 @@
        $id = htmlspecialchars($_GET['id']);
        if(!is_numeric($id))
        {
-           header("LOCATION:schools.php");
+           header("LOCATION:works.php");
            exit();
        }
    }else{
-       header("LOCATION:schools.php");
+       header("LOCATION:works.php");
        exit();
    }
 
    require "../connexion.php";
    // requête à la bdd
-   $school = $bdd->prepare("SELECT * FROM etablissements WHERE id=?");
-   $school->execute([$id]);
-   $donSchool = $school->fetch();
-   $school->closeCursor();
-   if(!$donSchool)
+   $work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+   $work->execute([$id]);
+   $donWork = $work->fetch();
+   $work->closeCursor();
+   if(!$donWork)
    {
-       header("LOCATION:schools.php");
+       header("LOCATION:works.php");
        exit();
    }
  
@@ -87,7 +87,7 @@
          {
              if($_FILES['image']['error'] != 0)
              {
-                 header("LOCATION:updateSchools.php?id=".$id."&error=6");
+                 header("LOCATION:updateWorks.php?id=".$id."&error=6");
                  exit();
              }
 
@@ -138,11 +138,11 @@
                  if(move_uploaded_file($_FILES['image']['tmp_name'], $dossier.$fichierCplt))
                  {
                     // supprimer l'ancienne image du dossier /images/
-                    unlink("../images/".$donSchool['image']);
-                    unlink("../images/mini_".$donSchool['image']);
+                    unlink("../images/".$donWork['image']);
+                    unlink("../images/mini_".$donWork['image']);
 
                      // update dans la base de données avec PDO et SQL
-                     $update = $bdd->prepare("UPDATE etablissements SET nom=:nom, introduction=:intro, description=:descri, image=:img, categorie=:cat WHERE id=:myid");
+                     $update = $bdd->prepare("UPDATE oeuvres SET nom=:nom, introduction=:intro, description=:descri, image=:img, categorie=:cat WHERE id=:myid");
                     $update->execute([
                         ":nom" => $nom,
                         ":intro" => $introduction,
@@ -161,12 +161,12 @@
                          exit();
                      }
                  }else{
-                     header("LOCATION:updateSchools.php?id=".$id."&error=8");
+                     header("LOCATION:updateWorks.php?id=".$id."&error=8");
                      exit();
                  }
 
              }else{
-                 header("LOCATION:updateSchools.php?id=".$id."&error=".$err);
+                 header("LOCATION:updateWorks.php?id=".$id."&error=".$err);
                  exit();
              }
 
@@ -177,7 +177,7 @@
            // modif sans fichier
             // update dans la base de données
             // update dans la base de données avec PDO et SQL
-            $update = $bdd->prepare("UPDATE etablissements SET nom=:nom, introduction=:intro, description=:descri, categorie=:cat WHERE id=:myid");
+            $update = $bdd->prepare("UPDATE oeuvres SET nom=:nom, introduction=:intro, description=:descri, categorie=:cat WHERE id=:myid");
             $update->execute([
                 ":nom" => $nom,
                 ":intro" => $introduction,
@@ -186,7 +186,7 @@
                 ":myid" => $id
             ]);
             $update->closeCursor();
-            header("LOCATION:schools.php?update=".$id);
+            header("LOCATION:works.php?update=".$id);
             exit();
          }
 
@@ -196,13 +196,13 @@
      }else{
          // il y a eu au moins une erreur
          // rediriger vers le formulaire avec le code erreur généré
-         header("LOCATION:updateSchools.php?id=".$id."&error=".$err);
+         header("LOCATION:updateWorks.php?id=".$id."&error=".$err);
          exit();
      }
 
 
  }else{
-     header("LOCATION:updateSchools.php?id=".$id);
+     header("LOCATION:updateWorks.php?id=".$id);
      exit();
  }
 

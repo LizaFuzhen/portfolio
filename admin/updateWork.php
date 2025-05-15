@@ -12,23 +12,23 @@
         $id = htmlspecialchars($_GET['id']);
         if(!is_numeric($id))
         {
-            header("LOCATION:schools.php");
+            header("LOCATION:works.php");
             exit();
         }
     }else{
-        header("LOCATION:schools.php");
+        header("LOCATION:works.php");
         exit();
     }
 
     require "../connexion.php";
     // requête à la bdd
-    $school = $bdd->prepare("SELECT * FROM etablissements WHERE id=?");
-    $school->execute([$id]);
-    $donSchool = $school->fetch();
-    $school->closeCursor();
-    if(!$donSchool)
+    $work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+    $work->execute([$id]);
+    $donWork = $work->fetch();
+    $work->closeCursor();
+    if(!$donWork)
     {
-        header("LOCATION:schools.php");
+        header("LOCATION:works.php");
         exit();
     }
 
@@ -38,7 +38,7 @@ if(isset($_GET['delete']))
     $idDel = htmlspecialchars($_GET['delete']);
     if(!is_numeric($idDel))
     {
-        header("LOCATION:updateSchools.php?id=".$id);
+        header("LOCATION:updateWorks.php?id=".$id);
         exit();
     }
 
@@ -50,7 +50,7 @@ if(isset($_GET['delete']))
     $image->closeCursor();
     if(!$donImg)
     {
-        header("LOCATION:updateSchools.php?id=".$id);
+        header("LOCATION:updateWorks.php?id=".$id);
         exit();
     }
 
@@ -63,7 +63,7 @@ if(isset($_GET['delete']))
     $delete->closeCursor();
 
     // prévenir l'utilisateur
-    header("LOCATION:updateSchools.php?id=".$id."&successdel=".$idDel);
+    header("LOCATION:updateWorks.php?id=".$id."&successdel=".$idDel);
     exit();
 }
 
@@ -87,11 +87,11 @@ if(isset($_GET['delete']))
       <div class="row">
           <div class="col-md-6">
               <h1>Modifier un établissement</h1>
-              <a href="schools.php" class="btn btn-secondary">Retour</a>
-              <form action="treatmentUpdateSchool.php?id=<?= $id ?>" method="POST" enctype="multipart/form-data">
+              <a href="works.php" class="btn btn-secondary">Retour</a>
+              <form action="treatmentUpdateWork.php?id=<?= $id ?>" method="POST" enctype="multipart/form-data">
                   <div class="form-group my-3">
                       <label for="nom">Nom: </label>
-                      <input type="text" id="nom" name="nom" class="form-control" value="<?= $donSchool['nom'] ?>">
+                      <input type="text" id="nom" name="nom" class="form-control" value="<?= $donWork['nom'] ?>">
                   </div>
                   <div class="form-group my-3">
                       <label for="categorie">Categorie: </label>
@@ -100,7 +100,7 @@ if(isset($_GET['delete']))
                           $req = $bdd->query("SELECT * FROM categories");
                           while($don = $req->fetch())
                           {
-                              if($donSchool['categorie']==$don['id'])
+                              if($donWork['categorie']==$don['id'])
                               {
                                   echo "<option value='".$don['id']."' selected>".$don['nom']."</option>";
                               }else{
@@ -113,15 +113,15 @@ if(isset($_GET['delete']))
                   </div>
                   <div class="form-group my-3">
                       <label for="intro">Introduction: </label>
-                      <textarea name="introduction" id="intro" class="form-control"><?= $donSchool['introduction'] ?></textarea>
+                      <textarea name="introduction" id="intro" class="form-control"><?= $donWork['introduction'] ?></textarea>
                   </div>
                   <div class="form-group my-3">
                       <label for="description">Description: </label>
-                      <textarea name="description" id="description" class="form-control"><?= $donSchool['description'] ?></textarea>
+                      <textarea name="description" id="description" class="form-control"><?= $donWork['description'] ?></textarea>
                   </div>
                   <div class="form-group my-3">
                       <div class="col-4">
-                          <img src="../images/<?= $donSchool['image'] ?>" alt="image de <?= $donSchool['nom'] ?>" class="img-fluid">
+                          <img src="../images/<?= $donWork['image'] ?>" alt="image de <?= $donWork['nom'] ?>" class="img-fluid">
                       </div>
                       <label for="image">Image: </label>
                       <input type="file" name="image" id="image" class="form-control" value="">
@@ -154,19 +154,19 @@ if(isset($_GET['delete']))
                   </thead>
                   <tbody>
                   <?php
-                  $schools = $bdd->prepare("SELECT * FROM images WHERE id_etablissement=?");
-                  $schools->execute([$id]);
-                  while($don = $schools->fetch())
+                  $works = $bdd->prepare("SELECT * FROM images WHERE id_oeuvre=?");
+                  $works->execute([$id]);
+                  while($don = $works->fetch())
                   {
                       echo "<tr>";
                       echo "<td>".$don['id']."</td>";
                       echo "<td><img src='../images/".$don['fichier']."' alt='image de' class='img-fluid col-6'></td>";
                       echo "<td>";
-                      echo "<a href='updateSchools.php?id=".$id."&delete=".$don['id']."' class='btn btn-danger mx-1'>Supprimer</a>";
+                      echo "<a href='updateWorks.php?id=".$id."&delete=".$don['id']."' class='btn btn-danger mx-1'>Supprimer</a>";
                       echo "</td>";
                       echo "</tr>";
                   }
-                  $schools->closeCursor();
+                  $works->closeCursor();
                   ?>
                   </tbody>
               </table>

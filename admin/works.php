@@ -13,28 +13,28 @@
         $idDel = htmlspecialchars($_GET['delete']);
         if(!is_numeric($idDel))
         {
-            header("LOCATION:schools.php");
+            header("LOCATION:works.php");
             exit();
         }
 
         
         // vérifier si delete existe dans la bdd
-        $school = $bdd->prepare("SELECT * FROM etablissements WHERE id=?");
-        $school->execute([$idDel]);
-        $donSchool = $school->fetch();
-        $school->closeCursor();
-        if(!$donSchool)
+        $work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+        $work->execute([$idDel]);
+        $donWork = $work->fetch();
+        $work->closeCursor();
+        if(!$donWork)
         {
-            header("LOCATION:schools.php");
+            header("LOCATION:works.php");
             exit();
         } 
 
         // supprimer le fichier
-        unlink("../images/".$donSchool['image']);
-        unlink("../images/mini_".$donSchool['image']);
+        unlink("../images/".$donWork['image']);
+        unlink("../images/mini_".$donWork['image']);
 
         // supprimer les éventuelles images (fichier) de la galerie
-        $gal = $bdd->prepare("SELECT * FROM images WHERE id_etablissement=?");
+        $gal = $bdd->prepare("SELECT * FROM images WHERE id_oeuvre=?");
         $gal->execute([$idDel]);
         while($donGal = $gal->fetch())
         {
@@ -43,17 +43,17 @@
         $gal->closeCursor();
 
         // supprimer les éventuelles images (la donnée) de la galerie
-        $delGal = $bdd->prepare("DELETE FROM images WHERE id_etablissement=?");
+        $delGal = $bdd->prepare("DELETE FROM images WHERE id_oeuvre=?");
         $delGal->execute([$idDel]);
         $delGal->closeCursor();
 
         // supprimer la donnée dans la bdd
-        $delete = $bdd->prepare("DELETE FROM etablissements WHERE id=?");
+        $delete = $bdd->prepare("DELETE FROM oeuvres WHERE id=?");
         $delete->execute([$idDel]);
         $delete->closeCursor();
 
         // prévenir l'utilisateur
-        header("LOCATION:schools.php?successdel=".$idDel);
+        header("LOCATION:works.php?successdel=".$idDel);
         exit();
     }
 
@@ -74,8 +74,8 @@
         include("partials/header.php");
     ?>
   <div class="container-fluid">
-    <h1>Les établissements</h1>
-    <a href="addSchools.php" class="btn btn-success">Ajouter</a>
+    <h1>Les oeuvres</h1>
+    <a href="addWorks.php" class="btn btn-success">Ajouter</a>
     <?php
         if(isset($_GET['insert']))
         {
@@ -104,20 +104,20 @@
         </thead>
         <tbody>
             <?php
-                $schools = $bdd->query("SELECT etablissements.nom AS enom, etablissements.id AS eid, categories.nom AS cnom FROM etablissements INNER JOIN categories ON etablissements.categorie = categories.id"); 
-                while($don = $schools->fetch())
+                $works = $bdd->query("SELECT oevres.nom AS enom, oeuvres.id AS eid, categories.nom AS cnom FROM oeuvres INNER JOIN categories ON oeuvres.categorie = categories.id"); 
+                while($don = $works->fetch())
                 {
                     echo "<tr>";
                         echo "<td>".$don['eid']."</td>";
                         echo "<td>".$don['enom']."</td>";
                         echo "<td>".$don['cnom']."</td>";
                         echo "<td>";
-                            echo "<a href='updateSchools.php?id=".$don['eid']."' class='btn btn-warning mx-1'>Modifier</a>";
-                            echo "<a href='schools.php?delete=".$don['eid']."' class='btn btn-danger mx-1'>Supprimer</a>";
+                            echo "<a href='updateWorks.php?id=".$don['eid']."' class='btn btn-warning mx-1'>Modifier</a>";
+                            echo "<a href='works.php?delete=".$don['eid']."' class='btn btn-danger mx-1'>Supprimer</a>";
                         echo "</td>";
                     echo "</tr>";
                 }
-                $schools->closeCursor();
+                $works->closeCursor();
             ?>
         </tbody>
     </table>

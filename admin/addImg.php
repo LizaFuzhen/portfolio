@@ -12,23 +12,23 @@ if(isset($_GET['id']))
     $id = htmlspecialchars($_GET['id']);
     if(!is_numeric($id))
     {
-        header("LOCATION:schools.php");
+        header("LOCATION:works.php");
         exit();
     }
 }else{
-    header("LOCATION:schools.php");
+    header("LOCATION:works.php");
     exit();
 }
 
 require "../connexion.php";
 // requête à la bdd
-$school = $bdd->prepare("SELECT * FROM etablissements WHERE id=?");
-$school->execute([$id]);
-$donSchool = $school->fetch();
-$school->closeCursor();
-if(!$donSchool)
+$work = $bdd->prepare("SELECT * FROM oeuvre WHERE id=?");
+$work->execute([$id]);
+$donWork = $work->fetch();
+$work->closeCursor();
+if(!$donWork)
 {
-    header("LOCATION:schools.php");
+    header("LOCATION:works.php");
     exit();
 }
 ?>
@@ -47,8 +47,8 @@ if(!$donSchool)
 include("partials/header.php");
 ?>
 <div class="container">
-    <h1>Ajouter une image à <?= $donSchool['nom'] ?></h1>
-    <a href="updateSchools.php?id=<?= $id ?>" class="btn btn-secondary">Retour</a>
+    <h1>Ajouter une image à <?= $donWorks['nom'] ?></h1>
+    <a href="updateWorks.php?id=<?= $id ?>" class="btn btn-secondary">Retour</a>
     <?php
     if(isset($_GET['error']))
     {

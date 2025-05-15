@@ -58,7 +58,7 @@
             {
                 if($_FILES['image']['error'] != 0)
                 {
-                    header("LOCATION:addSchools.php?error=6");
+                    header("LOCATION:addWorks.php?error=6");
                     exit();
                 }
 
@@ -114,7 +114,8 @@
                         require "../connexion.php";
                         // insérer dans la base de données avec PDO et SQL
                         /** @var PDO $bdd */
-                        $insert = $bdd->prepare("INSERT INTO etablissements(nom,introduction,description,image,categorie) VALUES(:nom,:intro,:descri,:img,:cat)");
+                        $insert = $bdd->prepare("INSERT INTO oeuvres(nom,introduction,description,image,categorie) VALUES(:nom,:intro,:descri,:img,:cat)");
+                        // revoir les ()
                         $insert->execute([
                             ":nom" => $nom,
                             ":intro" => $introduction,
@@ -133,12 +134,12 @@
                             exit();
                         }
                     }else{
-                        header("LOCATION:addSchools.php?error=8");
+                        header("LOCATION:addWorks.php?error=8");
                         exit();
                     }
 
                 }else{
-                    header("LOCATION:addSchools.php?error=".$err);
+                    header("LOCATION:addWorks.php?error=".$err);
                     exit();
                 }
 
@@ -146,7 +147,7 @@
 
 
             }else{
-                header("LOCATION:addSchools.php?error=5");
+                header("LOCATION:addWorks.php?error=5");
                 exit();
             }
 
@@ -156,13 +157,13 @@
         }else{
             // il y a eu au moins une erreur
             // rediriger vers le formulaire avec le code erreur généré
-            header("LOCATION:addSchools.php?error=".$err);
+            header("LOCATION:addWorks.php?error=".$err);
             exit();
         }
 
 
     }else{
-        header("LOCATION:addSchools.php");
+        header("LOCATION:addWorks.php");
         exit();
     }
 

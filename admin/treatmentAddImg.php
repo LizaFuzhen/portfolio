@@ -12,23 +12,23 @@ if(isset($_GET['id']))
     $id = htmlspecialchars($_GET['id']);
     if(!is_numeric($id))
     {
-        header("LOCATION:schools.php");
+        header("LOCATION:works.php");
         exit();
     }
 }else{
-    header("LOCATION:schools.php");
+    header("LOCATION:works.php");
     exit();
 }
 
 require "../connexion.php";
 // requête à la bdd
-$school = $bdd->prepare("SELECT * FROM etablissements WHERE id=?");
-$school->execute([$id]);
-$donSchool = $school->fetch();
-$school->closeCursor();
-if(!$donSchool)
+$work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+$work->execute([$id]);
+$donWork = $work->fetch();
+$work->closeCursor();
+if(!$donWork)
 {
-    header("LOCATION:schools.php");
+    header("LOCATION:works.php");
     exit();
 }
 
@@ -37,7 +37,7 @@ if(isset($_FILES['image']))
 {
     if($_FILES['image']['error'] != 0)
     {
-        header("LOCATION:updateSchools.php?id=".$id."&error=2");
+        header("LOCATION:updateWorks.php?id=".$id."&error=2");
         exit();
     }
     // init err
@@ -95,25 +95,26 @@ if(isset($_FILES['image']))
                         require "../connexion.php";
             // insérer dans la base de données avec PDO et SQL
             $insert = $bdd->prepare("INSERT INTO images(fichier,id_etablissement) VALUES(:img,:etab)");
+            // que changer ???
             $insert->execute([
                 ":img" => $fichierCplt,
                 ":etab" => $id
             ]);
             $insert->closeCursor();
             // rediriger vers le tableau des écoles avec un signalement que c'est ajouté
-            header("LOCATION:updateSchools.php?id=".$id."&insert=success");
+            header("LOCATION:updateWorks.php?id=".$id."&insert=success");
             exit();
         }else{
-            header("LOCATION:updateSchools.php?id=".$id."&error=8");
+            header("LOCATION:updateWorks.php?id=".$id."&error=8");
             exit();
         }
 
     }else{
-        header("LOCATION:updateSchools.php?id=".$id."&error=".$err);
+        header("LOCATION:updateWorks.php?id=".$id."&error=".$err);
         exit();
     }
 }else{
-    header("LOCATION:updateSchools.php?id=".$id."&error=1");
+    header("LOCATION:updateWorks.php?id=".$id."&error=1");
     exit();
 }
 
