@@ -40,7 +40,7 @@
             <select name="categorie" id="categorie" class="form-control">
                 <?php
                     $req = $bdd->query("SELECT * FROM categories");
-                    // que mettre à catégories ? 
+                    // que mettre à catégories ? reste comme ça après dans l'interface creer les cate et de a chipote
                     while($don = $req->fetch())
                     {
                         echo "<option value='".$don['id']."'>".$don['nom']."</option>";
