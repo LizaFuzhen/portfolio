@@ -77,6 +77,7 @@
                     </div>
                     <div class="form-group my-2">
                         <input type="submit" value="Connexion" class="btn btn-success">
+                        <a href="../index.php" class="btn btn-secondary mx-2">Retour au site</a>
                     </div>
                 </form>
             </div>

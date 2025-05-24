@@ -50,7 +50,7 @@
             </select>
         </div>
         <div class="form-group my-3">
-            <label for="intro">Introduction: </label>
+            <label for="intro">Les programmes utilisés: </label>
             <textarea name="introduction" id="intro" class="form-control"></textarea>
         </div>
         <div class="form-group my-3">

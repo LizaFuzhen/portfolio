@@ -50,9 +50,9 @@ imagepng($destination,$rep_nom);
 // redirection
 if(isset($_GET['update']))
 {
-    header("LOCATION:schools.php?update=".$_GET['update']);
+    header("LOCATION:works.php?update=".$_GET['update']);
 }else{
-    header("LOCATION:schools.php?insert=success");
+    header("LOCATION:works.php?insert=success");
 }
 
 ?>

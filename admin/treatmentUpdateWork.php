@@ -23,7 +23,7 @@
 
    require "../connexion.php";
    // requête à la bdd
-   $work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+   $work = $bdd->prepare("SELECT * FROM works WHERE id=?");
    $work->execute([$id]);
    $donWork = $work->fetch();
    $work->closeCursor();
@@ -87,7 +87,7 @@
          {
              if($_FILES['image']['error'] != 0)
              {
-                 header("LOCATION:updateWorks.php?id=".$id."&error=6");
+                 header("LOCATION:updateWork.php?id=".$id."&error=6");
                  exit();
              }
 
@@ -142,7 +142,7 @@
                     unlink("../images/mini_".$donWork['image']);
 
                      // update dans la base de données avec PDO et SQL
-                     $update = $bdd->prepare("UPDATE oeuvres SET nom=:nom, introduction=:intro, description=:descri, image=:img, categorie=:cat WHERE id=:myid");
+                     $update = $bdd->prepare("UPDATE works SET nom=:nom, programmes=:intro, description=:descri, image=:img, categorie=:cat WHERE id=:myid");
                     $update->execute([
                         ":nom" => $nom,
                         ":intro" => $introduction,
@@ -161,12 +161,12 @@
                          exit();
                      }
                  }else{
-                     header("LOCATION:updateWorks.php?id=".$id."&error=8");
+                     header("LOCATION:updateWork.php?id=".$id."&error=8");
                      exit();
                  }
 
              }else{
-                 header("LOCATION:updateWorks.php?id=".$id."&error=".$err);
+                 header("LOCATION:updateWork.php?id=".$id."&error=".$err);
                  exit();
              }
 
@@ -177,7 +177,7 @@
            // modif sans fichier
             // update dans la base de données
             // update dans la base de données avec PDO et SQL
-            $update = $bdd->prepare("UPDATE oeuvres SET nom=:nom, introduction=:intro, description=:descri, categorie=:cat WHERE id=:myid");
+            $update = $bdd->prepare("UPDATE works SET nom=:nom, programmes=:intro, description=:descri, categorie=:cat WHERE id=:myid");
             $update->execute([
                 ":nom" => $nom,
                 ":intro" => $introduction,
@@ -196,13 +196,13 @@
      }else{
          // il y a eu au moins une erreur
          // rediriger vers le formulaire avec le code erreur généré
-         header("LOCATION:updateWorks.php?id=".$id."&error=".$err);
+         header("LOCATION:updateWork.php?id=".$id."&error=".$err);
          exit();
      }
 
 
  }else{
-     header("LOCATION:updateWorks.php?id=".$id);
+     header("LOCATION:updateWork.php?id=".$id);
      exit();
  }
 

@@ -19,8 +19,8 @@
 
         
         // vérifier si delete existe dans la bdd
-        $work = $bdd->prepare("SELECT * FROM skills WHERE id=?");
-        $work->execute([$idDel]);
+        $skills = $bdd->prepare("SELECT * FROM skills WHERE id=?");
+        $skills->execute([$idDel]);
         $donSkills = $skills->fetch();
         $skills->closeCursor();
         if(!$donSkills)
@@ -39,7 +39,7 @@
         $delete->closeCursor();
 
         // prévenir l'utilisateur
-        header("LOCATION:works.php?successdel=".$idDel);
+        header("LOCATION:skills.php?successdel=".$idDel);
         exit();
     }
 

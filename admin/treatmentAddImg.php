@@ -22,7 +22,7 @@ if(isset($_GET['id']))
 
 require "../connexion.php";
 // requête à la bdd
-$work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+$work = $bdd->prepare("SELECT * FROM works WHERE id=?");
 $work->execute([$id]);
 $donWork = $work->fetch();
 $work->closeCursor();
@@ -37,7 +37,7 @@ if(isset($_FILES['image']))
 {
     if($_FILES['image']['error'] != 0)
     {
-        header("LOCATION:updateWorks.php?id=".$id."&error=2");
+        header("LOCATION:updateWork.php?id=".$id."&error=2");
         exit();
     }
     // init err
@@ -94,7 +94,7 @@ if(isset($_FILES['image']))
             // aller chercher la base de données (attention elle est à l'extérieur)
                         require "../connexion.php";
             // insérer dans la base de données avec PDO et SQL
-            $insert = $bdd->prepare("INSERT INTO images(fichier,id_etablissement) VALUES(:img,:etab)");
+            $insert = $bdd->prepare("INSERT INTO images(fichier,id_works) VALUES(:img,:etab)");
             // que changer ???
             $insert->execute([
                 ":img" => $fichierCplt,
@@ -102,19 +102,19 @@ if(isset($_FILES['image']))
             ]);
             $insert->closeCursor();
             // rediriger vers le tableau des écoles avec un signalement que c'est ajouté
-            header("LOCATION:updateWorks.php?id=".$id."&insert=success");
+            header("LOCATION:updateWork.php?id=".$id."&insert=success");
             exit();
         }else{
-            header("LOCATION:updateWorks.php?id=".$id."&error=8");
+            header("LOCATION:updateWork.php?id=".$id."&error=8");
             exit();
         }
 
     }else{
-        header("LOCATION:updateWorks.php?id=".$id."&error=".$err);
+        header("LOCATION:updateWork.php?id=".$id."&error=".$err);
         exit();
     }
 }else{
-    header("LOCATION:updateWorks.php?id=".$id."&error=1");
+    header("LOCATION:updateWork.php?id=".$id."&error=1");
     exit();
 }
 

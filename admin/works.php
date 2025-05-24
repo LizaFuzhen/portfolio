@@ -19,7 +19,7 @@
 
         
         // vérifier si delete existe dans la bdd
-        $work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+        $work = $bdd->prepare("SELECT * FROM works WHERE id=?");
         $work->execute([$idDel]);
         $donWork = $work->fetch();
         $work->closeCursor();
@@ -34,7 +34,7 @@
         unlink("../images/mini_".$donWork['image']);
 
         // supprimer les éventuelles images (fichier) de la galerie
-        $gal = $bdd->prepare("SELECT * FROM images WHERE id_oeuvre=?");
+        $gal = $bdd->prepare("SELECT * FROM images WHERE id_works=?");
         $gal->execute([$idDel]);
         while($donGal = $gal->fetch())
         {
@@ -43,12 +43,12 @@
         $gal->closeCursor();
 
         // supprimer les éventuelles images (la donnée) de la galerie
-        $delGal = $bdd->prepare("DELETE FROM images WHERE id_oeuvre=?");
+        $delGal = $bdd->prepare("DELETE FROM images WHERE id_works=?");
         $delGal->execute([$idDel]);
         $delGal->closeCursor();
 
         // supprimer la donnée dans la bdd
-        $delete = $bdd->prepare("DELETE FROM oeuvres WHERE id=?");
+        $delete = $bdd->prepare("DELETE FROM works WHERE id=?");
         $delete->execute([$idDel]);
         $delete->closeCursor();
 
@@ -112,7 +112,7 @@
                         echo "<td>".$don['enom']."</td>";
                         echo "<td>".$don['cnom']."</td>";
                         echo "<td>";
-                            echo "<a href='updateWorks.php?id=".$don['eid']."' class='btn btn-warning mx-1'>Modifier</a>";
+                            echo "<a href='updateWork.php?id=".$don['eid']."' class='btn btn-warning mx-1'>Modifier</a>";
                             echo "<a href='works.php?delete=".$don['eid']."' class='btn btn-danger mx-1'>Supprimer</a>";
                         echo "</td>";
                     echo "</tr>";

@@ -22,11 +22,11 @@ if(isset($_GET['id']))
 
 require "../connexion.php";
 // requête à la bdd
-$work = $bdd->prepare("SELECT * FROM oeuvre WHERE id=?");
+$work = $bdd->prepare("SELECT * FROM works WHERE id=?");
 $work->execute([$id]);
-$donWork = $work->fetch();
+$donWorks = $work->fetch();
 $work->closeCursor();
-if(!$donWork)
+if(!$donWorks)
 {
     header("LOCATION:works.php");
     exit();
@@ -48,7 +48,7 @@ include("partials/header.php");
 ?>
 <div class="container">
     <h1>Ajouter une image à <?= $donWorks['nom'] ?></h1>
-    <a href="updateWorks.php?id=<?= $id ?>" class="btn btn-secondary">Retour</a>
+    <a href="updateWork.php?id=<?= $id ?>" class="btn btn-secondary">Retour</a>
     <?php
     if(isset($_GET['error']))
     {

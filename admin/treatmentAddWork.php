@@ -114,7 +114,7 @@
                         require "../connexion.php";
                         // insérer dans la base de données avec PDO et SQL
                         /** @var PDO $bdd */
-                        $insert = $bdd->prepare("INSERT INTO oeuvres(nom,introduction,description,image,categorie) VALUES(:nom,:intro,:descri,:img,:cat)");
+                        $insert = $bdd->prepare("INSERT INTO works(nom,programmes,description,image,categorie) VALUES(:nom,:intro,:descri,:img,:cat)");
                         // revoir les ()
                         $insert->execute([
                             ":nom" => $nom,

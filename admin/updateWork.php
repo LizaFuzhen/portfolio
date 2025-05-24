@@ -22,7 +22,7 @@
 
     require "../connexion.php";
     // requête à la bdd
-    $work = $bdd->prepare("SELECT * FROM oeuvres WHERE id=?");
+    $work = $bdd->prepare("SELECT * FROM works WHERE id=?");
     $work->execute([$id]);
     $donWork = $work->fetch();
     $work->closeCursor();
@@ -38,7 +38,7 @@ if(isset($_GET['delete']))
     $idDel = htmlspecialchars($_GET['delete']);
     if(!is_numeric($idDel))
     {
-        header("LOCATION:updateWorks.php?id=".$id);
+        header("LOCATION:updateWork.php?id=".$id);
         exit();
     }
 
@@ -50,7 +50,7 @@ if(isset($_GET['delete']))
     $image->closeCursor();
     if(!$donImg)
     {
-        header("LOCATION:updateWorks.php?id=".$id);
+        header("LOCATION:updateWork.php?id=".$id);
         exit();
     }
 
@@ -63,7 +63,7 @@ if(isset($_GET['delete']))
     $delete->closeCursor();
 
     // prévenir l'utilisateur
-    header("LOCATION:updateWorks.php?id=".$id."&successdel=".$idDel);
+    header("LOCATION:updateWork.php?id=".$id."&successdel=".$idDel);
     exit();
 }
 
@@ -112,8 +112,8 @@ if(isset($_GET['delete']))
                       </select>
                   </div>
                   <div class="form-group my-3">
-                      <label for="intro">Introduction: </label>
-                      <textarea name="introduction" id="intro" class="form-control"><?= $donWork['introduction'] ?></textarea>
+                      <label for="intro">Les programmes utilisés: </label>
+                      <textarea name="introduction" id="intro" class="form-control"><?= $donWork['programmes'] ?></textarea>
                   </div>
                   <div class="form-group my-3">
                       <label for="description">Description: </label>
@@ -154,7 +154,7 @@ if(isset($_GET['delete']))
                   </thead>
                   <tbody>
                   <?php
-                  $works = $bdd->prepare("SELECT * FROM images WHERE id_oeuvre=?");
+                  $works = $bdd->prepare("SELECT * FROM images WHERE id_works=?");
                   $works->execute([$id]);
                   while($don = $works->fetch())
                   {
@@ -162,7 +162,7 @@ if(isset($_GET['delete']))
                       echo "<td>".$don['id']."</td>";
                       echo "<td><img src='../images/".$don['fichier']."' alt='image de' class='img-fluid col-6'></td>";
                       echo "<td>";
-                      echo "<a href='updateWorks.php?id=".$id."&delete=".$don['id']."' class='btn btn-danger mx-1'>Supprimer</a>";
+                      echo "<a href='updateWork.php?id=".$id."&delete=".$don['id']."' class='btn btn-danger mx-1'>Supprimer</a>";
                       echo "</td>";
                       echo "</tr>";
                   }

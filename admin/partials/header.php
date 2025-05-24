@@ -19,9 +19,6 @@
           <a class="nav-link" href="skills.php">Skills</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="members.php">Membres</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="contacts.php">Contact</a>
         </li>
     </ul>
