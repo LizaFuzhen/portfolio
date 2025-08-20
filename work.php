@@ -17,7 +17,11 @@
         header("LOCATION:404.php");
     }
     require "connexion.php";
-    $req = $bdd->prepare("SELECT etablissements.nom AS enom, categories.nom AS cnom, etablissements.introduction AS intro, etablissements.description AS description,  etablissements.image as image FROM etablissements INNER JOIN categories ON etablissements.categorie = categories.id WHERE etablissements.id=?");
+    // // TODO: CREER LA TABLE ETABLISSEMENT DANS LA BDD
+    // // TODO: kjmkhj
+    // echo ("fonction non disponible");
+     exit();
+    $req = $bdd->prepare("SELECT works.nom AS enom, categories.nom AS cnom, works.introduction AS intro, works.description AS description,  works.image as image FROM works INNER JOIN categories ON works.categorie = categories.id WHERE works.id=?");
     $req->execute([$id]);
     $don = $req->fetch();
     $req->closeCursor();

@@ -1,3 +1,3 @@
 <footer class="text-center">
-    &copy; Copyright 2025
+    &copy; Copyright Liza Van Caillie 2025
 </footer>

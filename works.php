@@ -24,7 +24,7 @@ if(isset($_GET['category']))
             }
             $verif->closeCursor();
 
-            $req = $bdd->prepare("SELECT * FROM etablissements WHERE categorie =?");
+            $req = $bdd->prepare("SELECT * FROM works WHERE categorie =?");
             $req->execute([$category]);
             // permet de compter le nombre de réponse
             $count = $req->rowCount();
@@ -39,7 +39,7 @@ if(isset($_GET['category']))
     }
 
 }else{
-    $req = $bdd->query("SELECT * FROM etablissements");
+    $req = $bdd->query("SELECT * FROM works");
     $count = $req->rowCount();
 }
 $req->closeCursor();
@@ -107,10 +107,10 @@ if(isset($_GET['page']))
                 // ce test sur la présence de $category qu'on crée au dessus suivant le choix de l'utilisateur
                 if(isset($category))
                 {
-                    $schools = $bdd->prepare("SELECT * FROM etablissements WHERE categorie = :category LIMIT :offset,:limit");
+                    $schools = $bdd->prepare("SELECT * FROM works WHERE categorie = :category LIMIT :offset,:limit");
                     $schools->bindParam(":category",$category, PDO::PARAM_INT);
                 }else{
-                    $schools = $bdd->prepare("SELECT * FROM etablissements LIMIT :offset,:limit");
+                    $schools = $bdd->prepare("SELECT * FROM works LIMIT :offset,:limit");
                 }
                 $schools->bindParam(":offset",$offset, PDO::PARAM_INT);
                 $schools->bindParam(":limit",$limit, PDO::PARAM_INT);
