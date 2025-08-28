@@ -58,7 +58,7 @@
             {
                 if($_FILES['image']['error'] != 0)
                 {
-                    header("LOCATION:addWorks.php?error=6");
+                    header("LOCATION:addWork.php?error=6");
                     exit();
                 }
 
@@ -134,12 +134,12 @@
                             exit();
                         }
                     }else{
-                        header("LOCATION:addWorks.php?error=8");
+                        header("LOCATION:addWork.php?error=8");
                         exit();
                     }
 
                 }else{
-                    header("LOCATION:addWorks.php?error=".$err);
+                    header("LOCATION:addWork.php?error=".$err);
                     exit();
                 }
 
@@ -147,7 +147,7 @@
 
 
             }else{
-                header("LOCATION:addWorks.php?error=5");
+                header("LOCATION:addWork.php?error=5");
                 exit();
             }
 
@@ -157,13 +157,13 @@
         }else{
             // il y a eu au moins une erreur
             // rediriger vers le formulaire avec le code erreur généré
-            header("LOCATION:addWorks.php?error=".$err);
+            header("LOCATION:addWork.php?error=".$err);
             exit();
         }
 
 
     }else{
-        header("LOCATION:addWorks.php");
+        header("LOCATION:addWork.php");
         exit();
     }
 

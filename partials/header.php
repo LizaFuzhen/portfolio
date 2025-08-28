@@ -1,39 +1,29 @@
-<header>
-    <div id="advert">
-        <div class="container">
-            <div class="info">
-                <div id="tel">Tel: 02 / 395 60 23</div>
-                <div id="email">E-mail: info@epse.be</div>
-            </div>
-            <div class="social">
-                Social media icons
-            </div>
+<header id="menu">
+    <div class="header-container">
+        <div id="logo">
+            <a href="/"><img src="images/logo.svg" alt="Logo Portfolio Liza"></a>
         </div>
-    </div>
-    <div class="head">
-        <div class="container">
-            <div id="logo">Site Name</div>
-            <nav>
-                <ul>
-                    <li><a href="index.php#home">Home</a></li>
-                    <li><a href="index.php#etablissement">School</a></li>
-                    <li><a href="index.php#contact">Contact</a></li>
-                </ul>
+
+        <nav class="main-menu oswald ft-medium">
+            <?php include("partials/menu.php"); ?>
+        </nav>
+
+        <div class="header-spacer"></div>
+
+        <div id="burger" class="burger">
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+        </div>
+
+        <div id="menu-mobile" class="menu-mobile">
+            <button class="close-menu" aria-label="Fermer le menu">
+                <span>&times;</span>
+            </button>
+
+            <nav class="oswald ft-medium">
+                <?php include("partials/menu.php"); ?>
             </nav>
-            <div id="burger">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
         </div>
     </div>
-</header>
-<div id="menu-mobile">
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#etablissement">School</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-</div>
+</header>   

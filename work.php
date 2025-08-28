@@ -1,9 +1,6 @@
 <?php
-    // besoin d'un id si pas d'id affichage erreur donc on fait une redirection
-    // isset => si existe
-    // empty => si vide mais existe
-    // négation des fonctions ! 
-    // n'existe pas => !isset
+    require "connexion.php";
+
     if(isset($_GET['id']))
     {
         $id = htmlspecialchars($_GET['id']);
@@ -16,98 +13,49 @@
     }else{
         header("LOCATION:404.php");
     }
-    require "connexion.php";
-    // // TODO: CREER LA TABLE ETABLISSEMENT DANS LA BDD
-    // // TODO: kjmkhj
-    // echo ("fonction non disponible");
-     exit();
-    $req = $bdd->prepare("SELECT works.nom AS enom, categories.nom AS cnom, works.introduction AS intro, works.description AS description,  works.image as image FROM works INNER JOIN categories ON works.categorie = categories.id WHERE works.id=?");
-    $req->execute([$id]);
-    $don = $req->fetch();
+
+    $req = $bdd->query("SELECT works.nom, works.description, works.image FROM works WHERE works.id = '" . $_GET['id'] . "' ORDER BY id DESC LIMIT 0,8");
+    $realisation = $req->fetch();
     $req->closeCursor();
-    // vérifier si $don est vide
-    if(!$don)
+
+     // Requêtes SQL qui les infos de l'oeuvre
+    if(empty($realisation))
     {
         header("LOCATION:404.php");
     }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-    <div class="slide school" id="test">
-        <?php
-            include("partials/header.php");
-        ?>
-        <div class="container container-info">
-            <div class="gauche">
-                <h1><?= $don['enom'] ?></h1>
-                <h4>Catégorie : <?= $don['cnom'] ?></h4>
-                <div class="img">
-                    <img src="images/<?= $don['image'] ?>" alt="image de <?= $don['enom'] ?>">
-                </div>
-            </div>
-            <div class="droite">
-                <div class="text">
-                    <h3>Introduction</h3>
-                    <?= nl2br($don['intro']) ?>
-                    <h3>Description</h3>
-                    <?= nl2br($don['description']) ?>
-                </div>
-            </div>
-        </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="short icon" href="images/logo.svg" type="image/x-icon">    <title>Portfolio Liza</title>
+    </head>
+    <body>
+        <section id="home" class="work-page">
+            <?php include("partials/header.php"); ?>      
+            <main>   
+                <div class="page-container">
+                    <div class="col left">
+                        <div class="work-image">
+                            <img src="images/<?= $realisation['image']?>" alt="<?= $realisation['nom'] ?> ">
+                        </div>
+                    </div>
 
-    </div>
-
-    <div id="galimg">
-        <div class="container">
-            <h1>Galerie images</h1>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <?php
-                        $reqGal = $bdd->prepare("SELECT * FROM images WHERE id_etablissement=?");
-                        $reqGal->execute([$id]);
-                        // compter le nombre de réponse
-                        $count = $reqGal->rowCount();
-                        if($count > 0)
-                        {
-                            while($donGal = $reqGal->fetch())
-                            {
-                                echo "<div class='swiper-slide'><img src='images/".$donGal['fichier']."' alt='image'></div>";
-                            }
-                        }else{
-                            echo "Aucune image pour cet établissement";
-                        }
-                        $reqGal->closeCursor();
-                    ?>
+                    <div class="col right">
+                        <div class="work-info">
+                            <h2><?= $realisation['nom']?></h2>
+                            <p><?= $realisation['description']?></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-            
-        </div>
-    </div>
-    <?php
-        include("partials/footer.php");
-    ?>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="assets/script.js"></script>
+            </main>
+        </section>
 
-    <!-- Initialize Swiper -->
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        });
-    </script>
-</body>
+        <!-- le script doit être déclaré en dernier (juste avant la fermeture du body) car les élements doivent exister pour que javascripts les select -->
+        <script src="assets/script.js"></script>
+    </body>
 </html>

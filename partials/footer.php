@@ -1,5 +1,5 @@
 <footer>
     <div id="copy">
-        &copy; copyright EPSE
+        &copy; copyright Liza Van Caillie 2025
     </div>
 </footer>
