@@ -38,6 +38,7 @@
         <section id="home" class="work-page">
             <?php include("partials/header.php"); ?>      
             <main>   
+                
                 <div class="page-container">
                     <div class="col left">
                         <div class="work-image">
@@ -49,6 +50,7 @@
                         <div class="work-info">
                             <h2><?= $realisation['nom']?></h2>
                             <p><?= $realisation['description']?></p>
+                            <?php include("partials/bouton.php"); ?>
                         </div>
                     </div>
                 </div>

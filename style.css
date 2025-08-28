@@ -576,6 +576,22 @@ nav a:hover {
     opacity: 0.8;
 }
 
+.btn-retour {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #e4904b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-retour:hover {
+  background: #555;
+}
 
 /**
  * Responsive : tout en colonne sur mobile 
