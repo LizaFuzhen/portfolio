@@ -1,1 +1,0 @@
-<button onclick="history.back()" class="btn-retour">← Retour</button>
