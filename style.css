@@ -441,7 +441,7 @@ nav a:hover {
  * Section Skills
  */
  #skills{
-    background: url("images/fondv.webp") no-repeat center/107%;
+    background: url("images/fondv1_1.webp") no-repeat center/107%;
 }
 
 #skills h2{
@@ -706,4 +706,31 @@ nav a:hover {
    #home h1 .van-caillie {
     font-size: 3rem;
    }
+}
+/* Responsive pour la page Work (réalisations individuelles) */
+@media (max-width: 1200px) {
+  .page-container {
+    flex-direction: column;   /* Passe en colonne */
+    align-items: center;      /* Centre le contenu */
+    text-align: center;       /* Centre le texte */
+  }
+
+  .page-container .left,
+  .page-container .right {
+    flex: 0 0 auto;    /* Enlève les largeurs forcées */
+    width: 100%;       /* Prend toute la largeur */
+    padding: 1rem 0;
+  }
+
+  .page-container .work-image img {
+    max-width: 90%;    /* Image plus petite et centrée */
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .page-container .work-info {
+    margin-top: 1rem;
+    padding: 0 1rem;
+  }
 }
