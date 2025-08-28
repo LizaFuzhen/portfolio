@@ -50,7 +50,7 @@
                         <div class="work-info">
                             <h2><?= $realisation['nom']?></h2>
                             <p><?= $realisation['description']?></p>
-                            <?php include("partials/bouton.php"); ?>
+                            <button onclick="history.back()" class="btn-retour">← Retour</button>
                         </div>
                     </div>
                 </div>

@@ -26,6 +26,7 @@
     <section id="realisations">
          <?php include("partials/header.php"); ?>
         <h2 class="iceberg">MES REALISATIONS</h2>
+         <?php include("partials/bouton.php"); ?>
         <div class="fish-container">
             <!-- Boucle qui permet d'afficher les 8 dernières réalisations -->
             <?php foreach ($realisations as $realisation): ?>
