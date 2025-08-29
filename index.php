@@ -171,9 +171,9 @@
                             <h3 class="oswald">Retrouvez moi également ici :</h3>
                             <ul>
                                 <li><a href="https://www.linkedin.com/in/liza-van-caillie-187556381/" target="_blank"><img src="images/lins.svg" alt="Linkedin"></a></li>
-                                <li><a href="#" target="_blank"><img src="images/instagrams.svg" alt="Instagram"></a></li>
-                                <li><a href="#" target="_blank"><img src="images/facebook.png" alt="facebook"></a></li>
-                                <li><a href="#" target="_blank"><img src="images/ytbs.svg" alt="youtube"></a></li>
+                                <li><a href="https://www.instagram.com/liza_infographie?igsh=ZGxqd3hland0OWU4" target="_blank"><img src="images/instagrams.svg" alt="Instagram"></a></li>
+                                <li><a href="https://www.facebook.com/profile.php?id=61576939303885" target="_blank"><img src="images/facebook.png" alt="facebook"></a></li>
+                                <li><a href="https://www.youtube.com/channel/UCPSJ1NAnt1sblU9FATps7DQ" target="_blank"><img src="images/ytbs.svg" alt="youtube"></a></li>
                             </ul>
                         </div>
                     </div>
