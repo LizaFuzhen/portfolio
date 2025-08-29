@@ -441,7 +441,7 @@ nav a:hover {
  * Section Skills
  */
  #skills{
-    background: url("images/fondv1_1.webp") no-repeat center/107%;
+    background: url("images/fonv1.webp") no-repeat center/107%;
 }
 
 #skills h2{
@@ -732,5 +732,32 @@ nav a:hover {
   .page-container .work-info {
     margin-top: 1rem;
     padding: 0 1rem;
+  }
+}
+/* --- Fixe le bloc tasse + réseaux sociaux sur mobile --- */
+@media (max-width: 768px) {
+  #contact .tasse-wrapper {
+    flex-direction: column;          /* Passe en colonne */
+    align-items: center;             /* Centre horizontalement */
+    justify-content: center;
+    max-height: none;                /* Enlève la contrainte */
+  }
+
+  #contact .tasse-wrapper img.tasse-image {
+    max-width: 90%;                  /* La tasse prend max 90% largeur */
+    height: auto;
+    object-position: center;
+  }
+
+  #contact .tasse-wrapper .tasse-infos {
+    position: static;                /* Enlève le absolute */
+    margin-top: 1rem;                /* Espace au-dessus */
+    text-align: center;              /* Centre les icônes */
+  }
+
+  #contact .tasse-wrapper li img {
+    width: 40px;                     /* Icônes plus grandes sur mobile */
+    height: 40px;
+    margin: 0.5rem;
   }
 }
